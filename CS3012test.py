@@ -1,4 +1,4 @@
-    import CS3012
+import CS3012
 
 
 def test_answer():
