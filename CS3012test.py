@@ -30,7 +30,7 @@ def test_answer():
 
     # test lca between nodes that aren't on the same tier of the tree
 
-    assert CS3012.findLCA(root, 5, 3) == 1
+    assert CS3012.findLCA(root, 5, 3) == 3
 
     # test lca between a node and itself
 
@@ -75,5 +75,9 @@ def test_answer():
     loner = CS3012.Node(15)
 
     assert CS3012.findLCA(root, 12, 15) == -1
+
+    # test lca when root is null
+
+    assert CS3012.findLCA(None, 10, 11) == -1
 
 
