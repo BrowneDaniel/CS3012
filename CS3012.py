@@ -10,7 +10,6 @@ class DAG(object):
     def creategraph(self):
         self.graph = {}
 
-
     def add_node(self, node, graph=None):
         if not graph:
             graph = self.graph
@@ -30,14 +29,13 @@ class DAG(object):
         else:
             raise KeyError("One or both nodes do not exist")
 
-
     def DFS(self, node_list, graph, node):
         if not graph[node]:
             return True
         else:
             for child in graph[node]:
                 if child not in node_list:
-                    node_list.append(child) # Add to list that stores the route
+                    node_list.append(child)  # Add to list that stores the route
                     if not self.DFS(node_list, graph, child):
                         return False
                     node_list.remove(child)
@@ -73,7 +71,7 @@ class DAG(object):
                 for index, node1 in enumerate(reversed(itemA)):
                     count = index
                     for node2 in reversed(itemB):
-                        if node1 == node2 and count < lowest_count: # LCA is the one with the lowest count
+                        if node1 == node2 and count < lowest_count:  # LCA is the one with the lowest count
                             LCANode = node2
                             return LCANode
 

@@ -3,8 +3,8 @@ import unittest
 
 testdag = None
 
-class CS3012test(unittest.TestCase):
 
+class CS3012test(unittest.TestCase):
 
     # test adding a node
     def test_add(self):
@@ -18,6 +18,12 @@ class CS3012test(unittest.TestCase):
         testdag = DAG()
         testdag.add_node('B')
         self.assertFalse(testdag.graph == {'A': []})
+
+    # test adding an edge between a node and a non-existent node
+    def test_add_nonex_edge(self):
+        testdag = DAG()
+        testdag.add_node('A')
+        self.assertRaises(KeyError, lambda: testdag.add_edge('A', 'B'))
 
     # test adding a duplicate node
     def test_add_dupe(self):
@@ -40,8 +46,8 @@ class CS3012test(unittest.TestCase):
         testdag = DAG()
         testdag.add_node('B')
         testdag.add_node('C')
-        testdag.add_edge('B','C')
-        self.assertTrue(testdag)
+        testdag.add_edge('B', 'C')
+        self.assertTrue(testdag.DFSWrapper(testdag.graph))
 
     # tests for LCA_DFS_Wrapper and LCA_DFS:
     # test for LCA between two nodes in a graph
@@ -94,3 +100,19 @@ class CS3012test(unittest.TestCase):
     def test_LCA_empty(self):
         testdag = DAG()
         self.assertTrue(testdag.LCA_DFS_Wrapper(testdag.graph, None, None) is None)
+
+    # test outlier cases that are not covered by previous tests
+    def test_outliers(self):
+        testdag = DAG()
+        testdag.add_node('A')
+        testdag.add_node('B')
+        testdag.add_node('C')
+        testdag.add_node('D')
+        testdag.add_edge('A', 'B')
+        testdag.add_edge('B', 'C')
+        testdag.add_edge('C', 'D')
+
+        self.assertTrue(testdag.DFS(['A', 'B'], testdag.graph, 'B'))
+
+        self.assertFalse(testdag.LCA_DFS(['A', 'B'], testdag.graph, 'A', None, 'B'))
+        self.assertFalse(testdag.LCA_DFS(['D', 'E'], testdag.graph, 'A', None, 'X'))
